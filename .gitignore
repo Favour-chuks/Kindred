@@ -1,0 +1,12 @@
+node_modules/
+dist/
+web/dist/
+/agentfiles
+skills-lock.json
+.agents/
+.pnpm-store/
+.env
+.env.local
+!.env.example
+data/
+*.log

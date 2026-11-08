@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verdant Goods — Conscious Living & Sustainable Gear</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f6f1;
+      --card-bg: #ffffff;
+      --border: #e6e0d4;
+      --border-dark: #d2c8b8;
+      --text-main: #19231c;
+      --text-muted: #5e6d63;
+      --accent-green: #234b31;
+      --accent-light: #eef5ef;
+      --accent-hover: #173321;
+      --clay: #c96541;
+      --clay-light: #faede8;
+      --gold-paypal: #ffc439;
+      --radius: 14px;
+    }
+
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 90px;
+    }
+
+    /* Top Announcement */
+    .top-bar {
+      background: var(--accent-green);
+      color: #f0f7f2;
+      font-size: 0.78rem;
+      padding: 8px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+    }
+    .top-bar a {
+      color: #ffffff;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    /* Main Navigation Header */
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      background: var(--accent-green);
+      color: #ffffff;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 10px rgba(35, 75, 49, 0.2);
+    }
+
+    .brand-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .brand-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+
+    .partner-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-light);
+      border: 1px solid rgba(35, 75, 49, 0.2);
+      color: var(--accent-green);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 999px;
+    }
+
+    /* Cart Header Button */
+    .cart-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffffff;
+      border: 1.5px solid var(--border-dark);
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: var(--text-main);
+      transition: all 0.15s ease;
+    }
+    .cart-btn:hover {
+      background: var(--bg);
+      border-color: var(--accent-green);
+    }
+    .cart-badge {
+      background: var(--clay);
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Hero */
+
+    .hero {
+      max-width: 1080px;
+      margin: 36px auto 28px;
+      padding: 0 24px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(2.3rem, 5vw, 3.4rem);
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      line-height: 1.05;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto;
+      font-size: 1rem;
+    }
+
+
+    /* Filter Bar */
+    .filter-bar {
+      max-width: 1140px;
+      margin: 0 auto 24px;
+      padding: 0 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+    .filter-chip {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .filter-chip:hover {
+      border-color: var(--accent-green);
+      color: var(--text-main);
+    }
+    .filter-chip.active {
+      background: var(--accent-green);
+      color: #ffffff;
+      border-color: var(--accent-green);
+    }
+
+    /* Layout: Products Grid + Sticky Cart Sidebar */
+    .layout-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 370px;
+      gap: 30px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .layout-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Products Grid */
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+      border-color: var(--border-dark);
+    }
+
+
+    .img-wrap {
+      position: relative;
+      width: 100%;
+      height: 160px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      background: #eae6de;
+    }
+
+    .product-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover .product-img {
+      transform: scale(1.04);
+    }
+
+    .category-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(4px);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--accent-green);
+      padding: 3px 8px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+
+
+    .product-title {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      line-height: 1.25;
+    }
+
+    .product-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      flex-grow: 1;
+      line-height: 1.4;
+    }
+
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+
+    .product-price {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+
+    .add-btn {
+      background: var(--accent-green);
+      color: #ffffff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+
+    .add-btn:hover {
+      background: var(--accent-hover);
+      transform: scale(1.02);
+    }
+    .add-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Sticky Cart & Checkout Sidebar */
+    .cart-sidebar {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      position: sticky;
+      top: 90px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.05);
+    }
+
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-header h2 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .clear-cart {
+      font-size: 0.75rem;
+      color: var(--clay);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .clear-cart:hover {
+      text-decoration: underline;
+    }
+
+    /* Cart Item List */
+    .cart-items {
+      max-height: 280px;
+      overflow-y: auto;
+      margin-bottom: 18px;
+      padding-right: 4px;
+    }
+    .empty-cart-msg {
+      text-align: center;
+      padding: 36px 12px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+    .empty-cart-msg span {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 8px;
+      opacity: 0.6;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 46px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+    .cart-thumb {
+      width: 46px;
+      height: 46px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #eae6de;
+    }
+    .cart-info {
+      min-width: 0;
+    }
+    .cart-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cart-cat {
+      font-size: 0.7rem;
+      color: var(--accent-green);
+      font-weight: 600;
+    }
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .qty-btn {
+      width: 22px;
+      height: 22px;
+      background: #f1ede4;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .qty-btn:hover {
+      background: #e2dbce;
+    }
+    .qty-num {
+      font-size: 0.8rem;
+      font-weight: 700;
+      min-width: 14px;
+      text-align: center;
+    }
+    .cart-price-block {
+      text-align: right;
+    }
+    .cart-line-price {
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+    .remove-item {
+      background: none;
+      border: none;
+      color: #999;
+      cursor: pointer;
+      font-size: 0.72rem;
+      margin-top: 2px;
+      display: block;
+    }
+    .remove-item:hover {
+      color: var(--clay);
+    }
+
+    /* Price Breakdown */
+    .summary-box {
+      background: #faf8f4;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 16px;
+      font-size: 0.85rem;
+    }
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      color: var(--text-muted);
+    }
+
+    .summary-line.categories-line {
+      align-items: flex-start;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border);
+    }
+    .categories-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      justify-content: flex-end;
+      max-width: 60%;
+    }
+    .cat-chip {
+      background: var(--accent-light);
+      border: 1px solid rgba(35, 75, 49, 0.2);
+      color: var(--accent-green);
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 5px;
+    }
+
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: var(--text-main);
+      padding-top: 10px;
+      margin-top: 8px;
+      border-top: 1.5px solid var(--border-dark);
+    }
+
+    /* Kindred Notice */
+    .kindred-handshake {
+      background: #f1f7f2;
+      border: 1px solid #c2dec8;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.76rem;
+      color: #1f422b;
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
+    .kindred-handshake strong {
+      font-weight: 700;
+      color: var(--accent-green);
+    }
+
+    /* PayPal SDK Container */
+
+    #paypal-button-container {
+      margin-top: 8px;
+      min-height: 48px;
+    }
+    .loading-paypal {
+      text-align: center;
+      padding: 14px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      background: #faf8f4;
+      border-radius: 8px;
+      border: 1px dashed var(--border);
+    }
+
+    /* Result Panel */
+
+    .status-panel {
+      display: none;
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 0.84rem;
+      line-height: 1.5;
+      animation: popIn 0.25s ease;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .status-success {
+      background: #ebf7ec;
+      border: 1.5px solid #8ec494;
+      color: #1b4923;
+    }
+
+    .status-success h3 {
+      font-size: 0.98rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-meta {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 8px;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 0.75rem;
+      word-break: break-all;
+      border: 1px solid #cce5d0;
+    }
+
+    .return-btn {
+      display: block;
+      margin-top: 12px;
+      padding: 10px 16px;
+      background: var(--accent-green);
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border-radius: 8px;
+      text-align: center;
+      transition: background 0.15s ease;
+    }
+
+    .return-btn:hover {
+      background: var(--accent-hover);
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-bar">
+    <span>🌱 Verdant Goods is an authorized <strong>Kindred Cause Partner</strong></span>
+    <span><a href="/">← Return to Kindred App</a></span>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <a href="/merchant" class="brand">
+      <div class="brand-logo">V</div>
+      <div>
+        <div class="brand-title">Verdant Goods</div>
+        <div class="brand-sub">Independent Sustainable Living</div>
+      </div>
+    </a>
+
+    <div class="nav-actions">
+      <div class="partner-pill">
+        <span>🤝</span> Kindred Verified
+      </div>
+
+      <button class="cart-btn" onclick="document.querySelector('.cart-sidebar').scrollIntoView({ behavior: 'smooth' })">
+        <span>🛒 Cart</span>
+        <span class="cart-badge" id="cart-count">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Thoughtful goods for<br><em>a restorative life.</em></h1>
+    <p>Shop books, zero-waste lifestyle supplies, heirloom seeds, and shade-grown coffee. Pay securely with PayPal Sandbox to automatically link broad interest signals to your Kindred account.</p>
+  </section>
+
+  <!-- Category Filter Bar -->
+  <div class="filter-bar" id="category-filters">
+    <button class="filter-chip active" onclick="filterCategory('all', this)">All Items (8)</button>
+    <button class="filter-chip" onclick="filterCategory('sporting_goods', this)">🏆 Sports & Chess</button>
+    <button class="filter-chip" onclick="filterCategory('pet_supplies', this)">🐾 Animal Rescue</button>
+    <button class="filter-chip" onclick="filterCategory('apparel_accessories', this)">👗 Women's Cooperative</button>
+    <button class="filter-chip" onclick="filterCategory('toys_games', this)">🧩 Youth STEM</button>
+    <button class="filter-chip" onclick="filterCategory('health_beauty', this)">💧 Clean Water</button>
+    <button class="filter-chip" onclick="filterCategory('media_books', this)">📖 Books</button>
+    <button class="filter-chip" onclick="filterCategory('food_beverage', this)">☕ Coffee</button>
+  </div>
+
+  <!-- Main Store Layout -->
+  <main class="layout-container">
+    <!-- Products Catalog Column -->
+    <div>
+      <div class="products-grid" id="products-grid"></div>
+    </div>
+
+    <!-- Sticky Cart & PayPal Checkout Sidebar -->
+    <aside class="cart-sidebar">
+      <div class="sidebar-header">
+        <h2><span>🛒</span> Your Cart</h2>
+        <button class="clear-cart" onclick="clearCart()">Clear all</button>
+      </div>
+
+      <!-- Scrollable Cart Item List -->
+      <div class="cart-items" id="cart-items-container">
+        <div class="empty-cart-msg">
+          <span>🧺</span>
+          Your cart is currently empty.<br>Add items from the store to checkout!
+        </div>
+      </div>
+
+      <!-- Price Breakdown -->
+      <div class="summary-box">
+        <div class="summary-line">
+          <span>Subtotal</span>
+          <span id="subtotal-val">$0.00</span>
+        </div>
+        <div class="summary-line">
+          <span>Estimated Shipping</span>
+          <span style="color: var(--accent-green); font-weight: 700;">FREE</span>
+        </div>
+        <div class="summary-line categories-line">
+          <span>Broad Categories:</span>
+          <div class="categories-chips" id="active-categories-list">
+            <span style="font-size: 0.72rem; color: #888;">None</span>
+          </div>
+        </div>
+        <div class="summary-total">
+          <span>Total USD</span>
+          <span id="total-val">$0.00</span>
+        </div>
+      </div>
+
+      <!-- Kindred Privacy Handshake Banner -->
+      <div class="kindred-handshake">
+        <strong>Kindred Privacy Handshake:</strong> Upon checkout, Verdant shares <em>only</em> your PayPal Payer ID and broad categories (<span id="handshake-cats">none</span>) with Kindred. No bank numbers, item details, or personal data leave this store.
+      </div>
+
+      <!-- PayPal Buttons Render Area -->
+      <div id="paypal-loading" class="loading-paypal">
+        Initializing PayPal Sandbox SDK…
+      </div>
+      <div id="paypal-button-container"></div>
+
+      <!-- Demo Instant Checkout Fallback Button -->
+      <div style="margin-top: 12px; text-align: center;">
+        <button
+          type="button"
+          onclick="triggerDemoInstantCheckout()"
+          style="width: 100%; background: #ffffff; border: 1.5px dashed var(--accent-green); color: var(--accent-green); padding: 9px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all .15s ease;"
+          onmouseover="this.style.background='var(--accent-light)'"
+          onmouseout="this.style.background='#ffffff'"
+        >
+          ⚡ Demo Checkout (Use Sandbox ID: QZAZCPCBP7VUC)
+        </button>
+        <span style="font-size: 0.68rem; color: var(--text-muted); display: block; margin-top: 4px;">
+          Fallback shortcut if sandbox network or popup is blocked
+        </span>
+      </div>
+
+      <!-- Post-Checkout Success Receipt -->
+      <div id="status-panel" class="status-panel"></div>
+    </aside>
+  </main>
+
+  <script>
+    // E-Commerce Catalog standardized to Google Product Taxonomy & PayPal MCC standards
+    // Products represent categories that differ strongly from the baseline reading/gardening profile,
+    // allowing demo purchases to visibly and significantly pivot recommendations!
+    const CATALOG = [
+      {
+        id: "sport-chess-set",
+        name: "Grandmaster Tournament Wooden Chess & Clock Set",
+        desc: "Weighted competition wooden tournament board and digital timer used for youth strategy clubs.",
+        price: 36.00,
+        category: "sporting_goods",
+        categoryName: "Sporting Goods > Sports & Games",
+        image: "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=600&q=80",
+        badge: "Sports & Strategy"
+      },
+      {
+        id: "pet-rescue-kit",
+        name: "Wildlife Rescue & Animal First Aid Kit",
+        desc: "Veterinary-approved triage supplies, electrolyte packs, and trauma wrap for animal rescues.",
+        price: 29.50,
+        category: "pet_supplies",
+        categoryName: "Animals & Pet Supplies > Pet Care",
+        image: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=600&q=80",
+        badge: "Wildlife & Pets"
+      },
+      {
+        id: "women-artisan-tote",
+        name: "Handwoven African Indigo Artisan Tote",
+        desc: "Ethically woven fair-trade cotton tote crafted directly by women's cooperatives in Nigeria.",
+        price: 42.00,
+        category: "apparel_accessories",
+        categoryName: "Apparel & Accessories > Handbags",
+        image: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80",
+        badge: "Women Artisans"
+      },
+      {
+        id: "stem-robotics-kit",
+        name: "Clean Kinetic Robotics & STEM Lab",
+        desc: "Solar, wind, and gear literacy kit designed for interactive youth STEM education workshops.",
+        price: 39.50,
+        category: "toys_games",
+        categoryName: "Toys & Games > Educational Toys",
+        image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
+        badge: "Youth STEM"
+      },
+      {
+        id: "water-filtration",
+        name: "Gravity Well Emergency Water Filter",
+        desc: "0.1-micron portable water purifier filtering 99.999% of bacteria and microplastics.",
+        price: 34.00,
+        category: "health_beauty",
+        categoryName: "Health & Beauty > Water Sanitation",
+        image: "https://images.unsplash.com/photo-1516214104703-d870798883c5?auto=format&fit=crop&w=600&q=80",
+        badge: "Clean Water"
+      },
+      {
+        id: "gear-lantern",
+        name: "Solar Trail Outdoor Camp Lantern",
+        desc: "Collapsible ultra-light solar lantern and rechargeable clean outdoor battery pack.",
+        price: 32.00,
+        category: "sporting_goods",
+        categoryName: "Sporting Goods > Outdoor",
+        image: "https://images.unsplash.com/photo-1508873696983-2df5293cb32f?auto=format&fit=crop&w=600&q=80",
+        badge: "Outdoor Gear"
+      },
+      {
+        id: "book-ecology",
+        name: "The Hidden Life of Trees",
+        desc: "Illustrated hardcover field guide to forest ecology, plant communication, and biodiversity.",
+        price: 18.50,
+        category: "media_books",
+        categoryName: "Media > Books",
+        image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80",
+        badge: "Bestseller"
+      },
+      {
+        id: "coffee-shade",
+        name: "Fair Harvest Shade-Grown Coffee",
+        desc: "Single-origin organic beans roasted by a local cooperative supporting agroforestry.",
+        price: 16.00,
+        category: "food_beverage",
+        categoryName: "Food & Beverage > Groceries",
+        image: "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=600&q=80",
+        badge: "Direct Trade"
+      }
+    ];
+
+    // Shopping Cart State: { productId: quantity }
+    let cart = {
+      "book-ecology": 1
+    };
+
+    let activeFilter = "all";
+
+    // Detect file:// vs http://
+    const isFileProto = window.location.protocol === "file:";
+    const API_BASE = isFileProto ? "http://localhost:3000" : "";
+
+    if (isFileProto) {
+      const banner = document.createElement("div");
+      banner.style.cssText = "background: #fff3cd; color: #856404; border-bottom: 2px solid #ffeeba; padding: 14px 20px; font-size: 0.9rem; text-align: center; font-weight: 500;";
+      banner.innerHTML = '⚠️ <strong>Notice:</strong> You opened this file directly from your disk (<code>file://</code>). Browsers block PayPal SDK and API requests on file URLs. Please open <a href="http://localhost:3000/merchant" style="color: #533f03; font-weight: 700; text-decoration: underline;">http://localhost:3000/merchant</a> while the Kindred server is running.';
+      document.body.prepend(banner);
+    }
+
+    // Render Product Cards
+    function renderCatalog() {
+      const grid = document.getElementById("products-grid");
+      const filtered = activeFilter === "all" ? CATALOG : CATALOG.filter(p => p.category === activeFilter);
+
+      grid.innerHTML = filtered.map(p => {
+        const qtyInCart = cart[p.id] || 0;
+        return `
+          <div class="product-card">
+            <div class="img-wrap">
+              <span class="category-badge">${p.badge}</span>
+              <img class="product-img" src="${p.image}" alt="${p.name}" loading="lazy" />
+            </div>
+            <h3 class="product-title">${p.name}</h3>
+            <p class="product-desc">${p.desc}</p>
+            <div class="product-footer">
+              <div class="product-price">$${p.price.toFixed(2)}</div>
+              <button class="add-btn" onclick="addToCart('${p.id}')">
+                ${qtyInCart > 0 ? `+ Add (${qtyInCart})` : `+ Add to Cart`}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function filterCategory(cat, btn) {
+      activeFilter = cat;
+      document.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
+      btn.classList.add("active");
+      renderCatalog();
+    }
+
+    // Cart Operations
+    function addToCart(productId) {
+      cart[productId] = (cart[productId] || 0) + 1;
+      updateCartUI();
+      renderCatalog();
+    }
+
+    function changeQty(productId, delta) {
+      if (!cart[productId]) return;
+      cart[productId] += delta;
+      if (cart[productId] <= 0) {
+        delete cart[productId];
+      }
+      updateCartUI();
+      renderCatalog();
+    }
+
+    function removeFromCart(productId) {
+      delete cart[productId];
+      updateCartUI();
+      renderCatalog();
+    }
+
+    function clearCart() {
+      cart = {};
+      updateCartUI();
+      renderCatalog();
+    }
+
+    function getCartTotals() {
+      let subtotal = 0;
+      let count = 0;
+      const categories = new Set();
+      const items = [];
+
+      for (const [id, qty] of Object.entries(cart)) {
+        const product = CATALOG.find(p => p.id === id);
+        if (product && qty > 0) {
+          subtotal += product.price * qty;
+          count += qty;
+          categories.add(product.category);
+          items.push({
+            product,
+            quantity: qty,
+            lineTotal: product.price * qty
+          });
+        }
+      }
+
+      return {
+        subtotal,
+        count,
+        categories: Array.from(categories),
+        items
+      };
+    }
+
+    function updateCartUI() {
+      const totals = getCartTotals();
+
+      // Update Header Badge
+      document.getElementById("cart-count").textContent = totals.count;
+
+      // Update Breakdown
+      document.getElementById("subtotal-val").textContent = `$${totals.subtotal.toFixed(2)}`;
+      document.getElementById("total-val").textContent = `$${totals.subtotal.toFixed(2)}`;
+
+      // Update Categories
+      const catContainer = document.getElementById("active-categories-list");
+      if (totals.categories.length === 0) {
+        catContainer.innerHTML = `<span style="font-size: 0.72rem; color: #888;">None</span>`;
+        document.getElementById("handshake-cats").textContent = "none";
+      } else {
+        catContainer.innerHTML = totals.categories.map(c => `<span class="cat-chip">${c}</span>`).join("");
+        document.getElementById("handshake-cats").textContent = totals.categories.join(", ");
+      }
+
+      // Update Cart Items container
+      const container = document.getElementById("cart-items-container");
+      if (totals.items.length === 0) {
+        container.innerHTML = `
+          <div class="empty-cart-msg">
+            <span>🧺</span>
+            Your cart is currently empty.<br>Add items from the store to checkout!
+          </div>
+        `;
+      } else {
+        container.innerHTML = totals.items.map(item => `
+          <div class="cart-item">
+            <img class="cart-thumb" src="${item.product.image}" alt="${item.product.name}" />
+            <div class="cart-info">
+              <div class="cart-name" title="${item.product.name}">${item.product.name}</div>
+              <div class="cart-cat">${item.product.categoryName}</div>
+              <div class="qty-controls">
+                <button class="qty-btn" onclick="changeQty('${item.product.id}', -1)">-</button>
+                <span class="qty-num">${item.quantity}</span>
+                <button class="qty-btn" onclick="changeQty('${item.product.id}', 1)">+</button>
+              </div>
+            </div>
+            <div class="cart-price-block">
+              <div class="cart-line-price">$${item.lineTotal.toFixed(2)}</div>
+              <button class="remove-item" onclick="removeFromCart('${item.product.id}')">Remove</button>
+            </div>
+          </div>
+        `).join("");
+      }
+    }
+
+    // Bootstrap PayPal SDK
+    async function bootstrapPayPal() {
+      try {
+        const config = await fetch(`${API_BASE}/api/config`).then(r => r.json());
+        if (!config.clientId) throw new Error("PayPal Sandbox Client ID is missing.");
+
+        const script = document.createElement("script");
+        script.src = `https://www.paypal.com/sdk/js?client-id=${config.clientId}&currency=USD`;
+        script.async = true;
+        script.onload = () => {
+          document.getElementById("paypal-loading").style.display = "none";
+          renderPayPalButtons();
+        };
+        script.onerror = () => {
+          document.getElementById("paypal-loading").textContent = "Could not load PayPal SDK.";
+        };
+        document.head.appendChild(script);
+      } catch (err) {
+        document.getElementById("paypal-loading").innerHTML = `
+          <strong>Notice:</strong> ${err.message}<br>
+          <small>Make sure the Kindred server is running and view at <a href="http://localhost:3000/merchant">http://localhost:3000/merchant</a></small>
+        `;
+      }
+    }
+
+    function renderPayPalButtons() {
+      if (!window.paypal) return;
+
+      window.paypal.Buttons({
+        style: {
+          layout: "vertical",
+          color: "gold",
+          shape: "rect",
+          label: "pay"
+        },
+        createOrder: async () => {
+          const totals = getCartTotals();
+          if (totals.count === 0 || totals.subtotal <= 0) {
+            alert("Please add at least one item to your cart before checking out.");
+            throw new Error("Cart is empty");
+          }
+
+          const orderDescription = totals.items.map(i => `${i.product.name} (x${i.quantity})`).join(", ");
+          const primaryCategory = totals.categories[0] || "media_books";
+
+          const res = await fetch(`${API_BASE}/api/merchant/orders`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: `Verdant Goods Order (${totals.count} items)`,
+              description: orderDescription.slice(0, 195),
+              amount: totals.subtotal.toFixed(2),
+              category: primaryCategory,
+              categories: totals.categories,
+              items: totals.items.map(i => ({
+                name: i.product.name,
+                quantity: i.quantity,
+                unitPrice: i.product.price.toFixed(2),
+                category: i.product.category
+              }))
+            })
+          });
+
+          const data = await res.json();
+          if (!res.ok || !data.orderId) throw new Error(data.error || "Order creation failed");
+          return data.orderId;
+        },
+        onApprove: async (data) => {
+          const statusEl = document.getElementById("status-panel");
+          statusEl.style.display = "block";
+          statusEl.className = "status-panel";
+          statusEl.innerHTML = "<em>Capturing payment with PayPal Sandbox…</em>";
+
+          const totals = getCartTotals();
+          const categoriesQuery = totals.categories.join(",");
+
+          try {
+            const res = await fetch(`${API_BASE}/api/merchant/orders/${data.orderID}/capture?categories=${encodeURIComponent(categoriesQuery)}`, {
+              method: "POST"
+            });
+            const result = await res.json();
+            if (!res.ok || !result.ok) throw new Error(result.error || "Payment capture failed");
+
+            // Empty cart after successful payment
+            cart = {};
+            updateCartUI();
+            renderCatalog();
+
+            statusEl.className = "status-panel status-success";
+            const recordedList = result.categories && result.categories.length > 0 
+              ? result.categories.map(c => `<code>${c}</code>`).join(", ")
+              : `<code>${result.category}</code>`;
+
+            statusEl.innerHTML = `
+              <h3>✅ Payment Captured via PayPal!</h3>
+              <p>Your multi-item order was processed successfully.</p>
+              <div class="status-meta">
+                <strong>PayPal Capture ID:</strong> ${result.captureId}<br>
+                <strong>PayPal Payer ID:</strong> ${result.payerId || "Extracted from session"}<br>
+                <strong>Shared Broad Categories:</strong> ${recordedList}
+              </div>
+              ${result.subscriberMatched ? `
+                <div style="margin-top: 8px; color: #1b4923; font-weight: 700; font-size: 0.88rem;">
+                  🎉 Kindred Subscriber Match Confirmed! Your purchase categories have been automatically ingested into your Kindred profile.
+                </div>
+              ` : `
+                <div style="margin-top: 8px; color: #5a665c; font-size: 0.8rem;">
+                  ℹ️ PayPal Payer ID was processed. Make sure this PayPal Sandbox account is linked in Kindred to see your cause recommendations adapt!
+                </div>
+              `}
+              <a href="/" class="return-btn">View Updated Kindred Causes →</a>
+            `;
+          } catch (err) {
+            statusEl.className = "status-panel";
+            statusEl.style.background = "#faeaea";
+            statusEl.style.color = "#992222";
+            statusEl.innerHTML = `<strong>Error:</strong> ${err.message}`;
+          }
+        },
+        onError: (err) => {
+          console.error("PayPal checkout error:", err);
+          const statusEl = document.getElementById("status-panel");
+          statusEl.style.display = "block";
+          statusEl.className = "status-panel";
+          statusEl.style.background = "#fff8e6";
+          statusEl.style.border = "1px solid #ffd166";
+          statusEl.style.color = "#7a5200";
+          statusEl.innerHTML = `
+            <strong>PayPal Sandbox popup notice:</strong> The browser or PayPal popup encountered an issue.<br>
+            <button onclick="triggerDemoInstantCheckout()" style="margin-top: 8px; background: var(--accent-green); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer;">
+              ⚡ Complete with Demo ID (QZAZCPCBP7VUC)
+            </button>
+          `;
+        }
+      }).render("#paypal-button-container");
+    }
+
+    async function triggerDemoInstantCheckout() {
+      const totals = getCartTotals();
+      if (totals.count === 0 || totals.subtotal <= 0) {
+        alert("Please add at least one item to your cart before checking out.");
+        return;
+      }
+
+      const statusEl = document.getElementById("status-panel");
+      statusEl.style.display = "block";
+      statusEl.className = "status-panel";
+      statusEl.innerHTML = "<em>Simulating verified PayPal capture for Demo ID (QZAZCPCBP7VUC)…</em>";
+
+      try {
+        const res = await fetch(`${API_BASE}/api/merchant/demo-simulate-checkout`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            payerId: "QZAZCPCBP7VUC",
+            categories: totals.categories
+          })
+        });
+        const result = await res.json();
+        if (!res.ok || !result.ok) throw new Error(result.error || "Simulation failed");
+
+        cart = {};
+        updateCartUI();
+        renderCatalog();
+
+        statusEl.className = "status-panel status-success";
+        const recordedList = result.categories && result.categories.length > 0 
+          ? result.categories.map(c => `<code>${c}</code>`).join(", ")
+          : `<code>${result.category}</code>`;
+
+        statusEl.innerHTML = `
+          <h3>✅ Payment Captured via PayPal (Demo Mode)!</h3>
+          <p>Order processed and verified for Sandbox Payer ID.</p>
+          <div class="status-meta">
+            <strong>PayPal Capture ID:</strong> ${result.captureId}<br>
+            <strong>PayPal Payer ID:</strong> ${result.payerId}<br>
+            <strong>Shared Categories:</strong> ${recordedList}
+          </div>
+          ${result.subscriberMatched ? `
+            <div style="margin-top: 8px; color: #1b4923; font-weight: 700; font-size: 0.88rem;">
+              🎉 Kindred Subscriber Match Confirmed! Category signals have been ingested into your Kindred profile.
+            </div>
+          ` : `
+            <div style="margin-top: 8px; color: #5a665c; font-size: 0.8rem;">
+              ℹ️ PayPal Payer ID was processed. Ensure QZAZCPCBP7VUC is linked in Kindred to see recommendations adapt!
+            </div>
+          `}
+          <a href="/" class="return-btn">View Updated Kindred Causes →</a>
+        `;
+      } catch (err) {
+        statusEl.className = "status-panel";
+        statusEl.style.background = "#faeaea";
+        statusEl.style.color = "#992222";
+        statusEl.innerHTML = `<strong>Error:</strong> ${err.message}`;
+      }
+    }
+
+    // Init
+    renderCatalog();
+    updateCartUI();
+    bootstrapPayPal();
+  </script>
+</body>
+
+</html>

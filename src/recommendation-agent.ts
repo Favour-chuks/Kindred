@@ -73,6 +73,22 @@ export class RecommendationAgent {
       emit("checking", "Using deterministic fit checks because the AI review was unavailable.");
     }
     if (!matches.length) matches = this.matching.scoreMatches(themes, state.feedback, state.shown, candidates, userGeo);
+
+    // AI translation: translate non-English descriptions (e.g. Betterplace German listings) into clear English
+    if (this.ai.configured() && matches.length) {
+      try {
+        emit("checking", "Translating any non-English cause descriptions into English.", "active");
+        const translations = await this.ai.translateCauses(matches);
+        const transMap = new Map(translations.map((t) => [t.id, t]));
+        matches = matches.map((m) => {
+          const t = transMap.get(m.id);
+          return t ? { ...m, name: t.name || m.name, mission: t.mission || m.mission } : m;
+        });
+      } catch {
+        // Translation non-fatal, preserve original titles and missions
+      }
+    }
+
     await this.store.recordShown(profile.id, matches.map((match) => match.id));
     emit("checking", reviewFailed ? "Deterministic checks completed." : "AI fit review passed through deterministic ranking and safety checks.");
     emit("ready", `${matches.length} causes are ready for your review.`);

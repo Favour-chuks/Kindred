@@ -1,9 +1,9 @@
 import { Theme } from "src/types";
 import { useKindred } from "@/context/KindredContext";
-import { ArrowRight, ShieldCheck, MapPin, Heart, Sparkles, Navigation, Loader2 } from "lucide-react";
+import { ArrowRight, ShieldCheck, MapPin, Heart, Sparkles, Navigation, Loader2, CheckCircle2, ExternalLink, Search } from "lucide-react";
 import { Button } from "./ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 
 const THEMES: Theme[] = [
   "education", "hunger", "environment", "climate",
@@ -33,6 +33,14 @@ const RELATED: Partial<Record<Theme, Theme[]>> = {
 
 type Step = "welcome" | "interests" | "location";
 
+type LocationSuggestion = {
+  displayName: string;
+  shortName: string;
+  lat: number;
+  lng: number;
+  country?: string;
+};
+
 export const ConsentScreen = () => {
   const {
     profile, busy, notice,
@@ -40,6 +48,7 @@ export const ConsentScreen = () => {
     locationConsent, setLocationConsent,
     paypalPayerId, setPaypalPayerId,
     area, setArea,
+    locationCoords, setLocationCoords,
     explicitThemes, toggleTheme,
     createProfile, updateSettings
   } = useKindred();
@@ -47,8 +56,75 @@ export const ConsentScreen = () => {
   const [step, setStep] = useState<Step>("welcome");
   const [geoLocating, setGeoLocating] = useState(false);
   const [geoError, setGeoError] = useState("");
+  const [suggestions, setSuggestions] = useState<LocationSuggestion[]>([]);
+  const [searchingLocation, setSearchingLocation] = useState(false);
+  const [confirmedPlace, setConfirmedPlace] = useState<LocationSuggestion | null>(null);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const isValidPayerId = !categoryConsent || (paypalPayerId.trim().length > 0 && /^[A-Z0-9]{13}$/i.test(paypalPayerId.trim()));
   const canProceedStep1 = categoryConsent && isValidPayerId;
+
+  const searchNominatim = async (query: string) => {
+    const q = query.trim();
+    if (q.length < 2) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+    setSearchingLocation(true);
+    setGeoError("");
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=5&addressdetails=1`,
+        { headers: { "Accept-Language": "en" } }
+      );
+      if (!res.ok) return;
+      const data = (await res.json()) as any[];
+      const items: LocationSuggestion[] = data.map((item) => {
+        const addr = item.address || {};
+        const city = addr.city || addr.town || addr.village || addr.municipality || addr.county || item.name;
+        const country = addr.country || "";
+        const shortName = [city, country].filter(Boolean).join(", ") || item.display_name.split(",").slice(0, 2).join(",");
+        return {
+          displayName: item.display_name,
+          shortName,
+          lat: parseFloat(item.lat),
+          lng: parseFloat(item.lon),
+          country,
+        };
+      });
+      setSuggestions(items);
+      setShowSuggestions(items.length > 0);
+    } catch {
+      setGeoError("Could not query location suggestions.");
+    } finally {
+      setSearchingLocation(false);
+    }
+  };
+
+  const handleAreaChange = (val: string) => {
+    setArea(val);
+    setConfirmedPlace(null);
+    if (!val.trim()) {
+      setLocationCoords(null);
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+
+    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+    searchTimeoutRef.current = setTimeout(() => {
+      void searchNominatim(val);
+    }, 400);
+  };
+
+  const handleSelectSuggestion = (item: LocationSuggestion) => {
+    setArea(item.shortName);
+    setLocationCoords({ lat: item.lat, lng: item.lng });
+    setConfirmedPlace(item);
+    setShowSuggestions(false);
+  };
 
   const handleUseLiveLocation = () => {
     if (!navigator.geolocation) {
@@ -61,6 +137,7 @@ export const ConsentScreen = () => {
       async (pos) => {
         try {
           const { latitude, longitude } = pos.coords;
+          setLocationCoords({ lat: latitude, lng: longitude });
           // Use OpenStreetMap reverse geocoding to resolve a friendly city/locality name
           const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`, {
             headers: { "Accept-Language": "en" }
@@ -69,13 +146,26 @@ export const ConsentScreen = () => {
           const city = data.address?.city || data.address?.town || data.address?.state || data.address?.county || "";
           const country = data.address?.country || "";
           const resolved = [city, country].filter(Boolean).join(", ");
-          if (resolved) {
-            setArea(resolved);
-          } else {
-            setArea(`${latitude.toFixed(2)}, ${longitude.toFixed(2)}`);
-          }
+          const name = resolved || `${latitude.toFixed(2)}, ${longitude.toFixed(2)}`;
+          setArea(name);
+          setConfirmedPlace({
+            displayName: data.display_name || name,
+            shortName: name,
+            lat: latitude,
+            lng: longitude,
+            country,
+          });
+          setShowSuggestions(false);
         } catch {
-          setArea(`${pos.coords.latitude.toFixed(2)}, ${pos.coords.longitude.toFixed(2)}`);
+          const coordsStr = `${pos.coords.latitude.toFixed(2)}, ${pos.coords.longitude.toFixed(2)}`;
+          setArea(coordsStr);
+          setLocationCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+          setConfirmedPlace({
+            displayName: `Coordinates (${coordsStr})`,
+            shortName: coordsStr,
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          });
         } finally {
           setGeoLocating(false);
         }
@@ -251,7 +341,7 @@ export const ConsentScreen = () => {
           {locationConsent && (
             <div className="cs-location-field">
               <div className="cs-location-header">
-                <label htmlFor="cs-area-input">Your city or area</label>
+                <label htmlFor="cs-area-input">Your city, town, or region</label>
                 <button
                   type="button"
                   className="cs-live-geo-btn"
@@ -271,14 +361,81 @@ export const ConsentScreen = () => {
                   )}
                 </button>
               </div>
-              <input
-                id="cs-area-input"
-                value={area}
-                onChange={(e) => setArea(e.target.value)}
-                placeholder="e.g. Lagos, London, Nairobi"
-                maxLength={80}
-              />
+
+              <div className="cs-location-input-wrap">
+                <input
+                  id="cs-area-input"
+                  value={area}
+                  onChange={(e) => handleAreaChange(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      void searchNominatim(area);
+                    }
+                  }}
+                  placeholder="e.g. Lagos, Abuja, London, Nairobi"
+                  maxLength={80}
+                />
+                <button
+                  type="button"
+                  className="cs-location-search-btn"
+                  onClick={() => void searchNominatim(area)}
+                  disabled={searchingLocation || !area.trim()}
+                >
+                  {searchingLocation ? <Loader2 size={14} className="animate-spin" /> : <Search size={14} />}
+                  <span>Verify</span>
+                </button>
+              </div>
+
               {geoError && <p className="cs-geo-error">{geoError}</p>}
+
+              {/* Suggestions dropdown to disambiguate locations */}
+              {showSuggestions && suggestions.length > 0 && (
+                <div className="cs-location-suggestions-dropdown">
+                  <p className="cs-suggestions-header">Did you mean one of these places?</p>
+                  {suggestions.map((item, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      className="cs-suggestion-item"
+                      onClick={() => handleSelectSuggestion(item)}
+                    >
+                      <MapPin size={15} className="cs-suggestion-pin" />
+                      <div className="cs-suggestion-text">
+                        <strong className="cs-suggestion-short">{item.shortName}</strong>
+                        <span className="cs-suggestion-full">{item.displayName}</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Confirmed Location Preview Card with OpenStreetMap verification */}
+              {confirmedPlace && (
+                <div className="cs-location-verified-card">
+                  <div className="cs-location-verified-header">
+                    <CheckCircle2 size={16} className="text-emerald-500" style={{ flexShrink: 0, marginTop: 2 }} />
+                    <div>
+                      <strong className="cs-verified-title">{confirmedPlace.shortName}</strong>
+                      <p className="cs-verified-full">{confirmedPlace.displayName}</p>
+                    </div>
+                  </div>
+                  <div className="cs-location-verified-meta">
+                    <span className="cs-verified-coords">
+                      GPS: {confirmedPlace.lat.toFixed(4)}°, {confirmedPlace.lng.toFixed(4)}°
+                    </span>
+                    <a
+                      href={`https://www.openstreetmap.org/?mlat=${confirmedPlace.lat}&mlon=${confirmedPlace.lng}#map=12/${confirmedPlace.lat}/${confirmedPlace.lng}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="cs-map-link"
+                    >
+                      <span>View on map</span>
+                      <ExternalLink size={12} />
+                    </a>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 

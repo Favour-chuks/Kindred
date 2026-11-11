@@ -14,6 +14,8 @@ export interface KindredContextValue {
   notice: string;
   area: string;
   setArea: (value: string) => void;
+  locationCoords: { lat: number; lng: number } | null;
+  setLocationCoords: (coords: { lat: number; lng: number } | null) => void;
   categoryConsent: boolean;
   setCategoryConsent: (value: boolean) => void;
   locationConsent: boolean;
@@ -45,6 +47,7 @@ export function KindredProvider({ children }: { children: React.ReactNode }) {
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
   const [area, setArea] = useState("");
+  const [locationCoords, setLocationCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [categoryConsent, setCategoryConsent] = useState(false);
   const [locationConsent, setLocationConsent] = useState(false);
   const [paypalPayerId, setPaypalPayerId] = useState("");
@@ -88,7 +91,12 @@ export function KindredProvider({ children }: { children: React.ReactNode }) {
     try {
       const started = await api<{ jobId: string }>("/api/recommendations", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ profileId: profile.id, area: locationConsent ? area.trim() || undefined : undefined }),
+        body: JSON.stringify({
+          profileId: profile.id,
+          area: locationConsent ? area.trim() || undefined : undefined,
+          lat: locationConsent ? locationCoords?.lat : undefined,
+          lng: locationConsent ? locationCoords?.lng : undefined,
+        }),
       });
       let snapshot: JobStatus;
       do {
@@ -102,7 +110,7 @@ export function KindredProvider({ children }: { children: React.ReactNode }) {
       setNotice(error instanceof Error ? error.message : "Recommendations could not be prepared.");
       setScreen("consent");
     } finally { setBusy(false); }
-  }, [api, area, locationConsent, profile]);
+  }, [api, area, locationConsent, locationCoords, profile]);
 
   const createProfile = useCallback(async () => {
     setBusy(true); setNotice("");
@@ -120,7 +128,12 @@ export function KindredProvider({ children }: { children: React.ReactNode }) {
       setScreen("activity"); setActivities([]);
       const started = await api<{ jobId: string }>("/api/recommendations", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ profileId: newProfile.id, area: locationConsent ? area.trim() || undefined : undefined }),
+        body: JSON.stringify({
+          profileId: newProfile.id,
+          area: locationConsent ? area.trim() || undefined : undefined,
+          lat: locationConsent ? locationCoords?.lat : undefined,
+          lng: locationConsent ? locationCoords?.lng : undefined,
+        }),
       });
       let snapshot: JobStatus;
       do {
@@ -131,7 +144,7 @@ export function KindredProvider({ children }: { children: React.ReactNode }) {
       if (snapshot.status === "error" || !snapshot.result) throw new Error(snapshot.error ?? "Recommendations could not be prepared.");
       setData(snapshot.result); setSelectedCause(null); setScreen("results");
     }
-  }, [api, area, categoryConsent, explicitThemes, locationConsent]);
+  }, [api, area, categoryConsent, explicitThemes, locationConsent, locationCoords]);
 
   const updateSettings = useCallback(async () => {
     if (!profile) return;
@@ -156,14 +169,14 @@ export function KindredProvider({ children }: { children: React.ReactNode }) {
     } catch (error) { setNotice(error instanceof Error ? error.message : "Feedback could not be recorded."); }
   }, [api, profile]);
 
-  const startOver = useCallback(() => { setScreen("consent"); setData(null); setNotice(""); }, []);
+  const startOver = useCallback(() => { setScreen("consent"); setData(null); setNotice(""); setLocationCoords(null); }, []);
   const selectCause = useCallback((cause: Match | null) => setSelectedCause(cause), []);
 
   const value = useMemo<KindredContextValue>(() => ({
-    profile, screen, busy, notice, area, setArea, categoryConsent, setCategoryConsent, locationConsent,
+    profile, screen, busy, notice, area, setArea, locationCoords, setLocationCoords, categoryConsent, setCategoryConsent, locationConsent,
     setLocationConsent, paypalPayerId, setPaypalPayerId, explicitThemes, toggleTheme, activities, data, selectedCause, selectCause, donationAmount, setDonationAmount, feedbackNotes, createProfile,
     updateSettings, requestRecommendations, sendFeedback, startOver,
-  }), [profile, screen, busy, notice, area, categoryConsent, locationConsent, paypalPayerId, explicitThemes, toggleTheme, activities, data, selectedCause, selectCause, donationAmount, feedbackNotes, createProfile, updateSettings, requestRecommendations, sendFeedback, startOver]);
+  }), [profile, screen, busy, notice, area, locationCoords, categoryConsent, locationConsent, paypalPayerId, explicitThemes, toggleTheme, activities, data, selectedCause, selectCause, donationAmount, feedbackNotes, createProfile, updateSettings, requestRecommendations, sendFeedback, startOver]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 

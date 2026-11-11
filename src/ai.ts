@@ -146,4 +146,51 @@ export class AIService {
       ? result.missingTheme as Theme : null;
     return { keepIds, missingTheme };
   }
+
+  /**
+   * Translates non-English titles or missions (e.g., Betterplace German project descriptions)
+   * into natural, fluent English using Gemini while preserving English titles and proper nouns.
+   */
+  async translateCauses(causes: Ngo[]): Promise<Array<{ id: string; name: string; mission: string }>> {
+    if (!this.configured() || !causes.length) {
+      return causes.map((c) => ({ id: c.id, name: c.name, mission: c.mission }));
+    }
+    try {
+      const result = await this.generate(
+        [
+          "You are an expert translator for a charitable donation platform.",
+          "Inspect the following charity titles and mission descriptions.",
+          "If a title or mission is in German, French, or any language other than English, translate it into natural, inspiring, fluent English.",
+          "If it is already in English, leave it completely unchanged.",
+          "Keep proper nouns, project names, and geographic city names intact (e.g., Lagos, Oshodi, Nigeria).",
+          JSON.stringify(causes.map((c) => ({ id: c.id, name: c.name, mission: c.mission }))),
+        ].join("\n"),
+        {
+          type: "OBJECT",
+          properties: {
+            translations: {
+              type: "ARRAY",
+              items: {
+                type: "OBJECT",
+                properties: {
+                  id: { type: "STRING" },
+                  name: { type: "STRING" },
+                  mission: { type: "STRING" },
+                },
+                required: ["id", "name", "mission"],
+              },
+            },
+          },
+          required: ["translations"],
+        },
+      ) as { translations?: Array<{ id: string; name: string; mission: string }> };
+
+      if (!Array.isArray(result?.translations)) {
+        return causes.map((c) => ({ id: c.id, name: c.name, mission: c.mission }));
+      }
+      return result.translations;
+    } catch {
+      return causes.map((c) => ({ id: c.id, name: c.name, mission: c.mission }));
+    }
+  }
 }
